@@ -7,7 +7,7 @@ const Destinations = () => {
 
   return (
     <div className="pt-24 px-6 md:px-12 lg:px-20 bg-gray-50 min-h-screen">
-      <h2 className="text-4xl md:text-5xl font-bold text-center text-blue-600 mb-12">
+      <h2 className="text-4xl md:text-5xl font-bold text-center text-orange-500 mb-12">
         Explore Our Destinations
       </h2>
 

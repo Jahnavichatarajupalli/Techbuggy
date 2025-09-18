@@ -31,7 +31,7 @@ router.post("/book", authMiddleware, async (req, res) => {
 });
 
 // 📍 Get all bookings of logged-in user
-router.get("/", authMiddleware, async (req, res) => {
+router.get("/bookings", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("bookings");
     if (!user) return res.status(404).json({ message: "User not found" });

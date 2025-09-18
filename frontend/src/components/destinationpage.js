@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+const apiUrl = "https://techbuggy-1.onrender.com";
 
 const DestinationDetails = () => {
   const { id } = useParams();
@@ -20,21 +21,20 @@ const DestinationDetails = () => {
       navigate("/login"); // redirect if not logged in
       return;
     }
-       console.log(destination.id)
+
     try {
-      const res = await fetch("http://localhost:5000/api/bookings/book", {
+      const res = await fetch(`${apiUrl}/api/bookings/book`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`, // send token
         },
         body: JSON.stringify({
-        
-          destinationId:destination.id,
+          destinationId: destination.id,
           destinationName: destination.name,
           date,
           persons,
-          price: destination.price*persons,
+          price: destination.price * persons,
         }),
       });
 
@@ -51,7 +51,8 @@ const DestinationDetails = () => {
     }
   };
 
-  if (!destination) return <h2 className="pt-24 text-center">Destination not found</h2>;
+  if (!destination)
+    return <h2 className="pt-24 text-center">Destination not found</h2>;
 
   return (
     <div className="pt-24 px-6 md:px-12 lg:px-20 flex flex-col md:flex-row gap-10">
@@ -65,6 +66,16 @@ const DestinationDetails = () => {
         <h2 className="text-3xl font-bold mt-4">{destination.name}</h2>
         <p className="text-gray-500">{destination.location}</p>
         <p className="text-lg mt-3">{destination.description}</p>
+
+        {/* Rating & Price */}
+        <div className="mt-4 flex items-center gap-6">
+          <p className="text-yellow-500 font-semibold text-lg">
+            ⭐ {destination.rating} / 5
+          </p>
+          <p className="text-orange-600 font-bold text-xl">
+            ₹{destination.price} / person
+          </p>
+        </div>
       </div>
 
       {/* Booking Form */}
@@ -72,7 +83,9 @@ const DestinationDetails = () => {
         <h3 className="text-2xl font-semibold mb-4">Book Your Trip</h3>
 
         {confirmed ? (
-          <p className="text-green-600 font-bold text-xl">🎉 Order Confirmed!</p>
+          <p className="text-green-600 font-bold text-xl">
+            🎉 Order Confirmed!
+          </p>
         ) : (
           <>
             {error && (
@@ -91,10 +104,18 @@ const DestinationDetails = () => {
             <input
               type="number"
               value={persons}
-              onChange={(e) => setPersons(e.target.value)}
+              onChange={(e) => setPersons(Number(e.target.value))}
               className="border rounded-lg px-3 py-2 w-full mb-4"
               min="1"
             />
+
+            {/* Show total price */}
+            <p className="text-lg font-semibold mb-4">
+              Total Price:{" "}
+              <span className="text-orange-600">
+                ₹{destination.price * persons}
+              </span>
+            </p>
 
             <button
               onClick={handleBooking}

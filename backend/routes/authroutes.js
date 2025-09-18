@@ -73,15 +73,24 @@ router.post("/login", async (req, res) => {
 // @route   GET /api/auth/profile
 // @desc    Get user profile (protected)
 // @access  Private
-router.get("/profile", protect, async (req, res) => {
+
+
+// GET /api/users/profile
+router.get("/profile", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user).select("-password");
+    const user = await User.findById(req.user.id)
+      .select("-password")
+      .populate("bookings"); // populate bookings if stored as ref
+
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    res.json(user);
+    res.json({ user });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
+module.exports = router;
+
 
 module.exports = router;

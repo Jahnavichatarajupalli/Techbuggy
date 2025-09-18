@@ -3,18 +3,17 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Login from "./components/login"
 import Register from "./components/register"
-
 import HeroCarousel from "./components/carousel";
 import Destinations from "./components/destinations";
 import DestinationDetails from "./components/destinationpage";
+import Contact from "./components/contact"
+import Profile from "./components/profile"
 
 const Home = () => (
   <div>
     <HeroCarousel />
   </div>
 )
-const Services = () => <h1 className="text-3xl p-20">Our Services</h1>;
-const Contact = () => <h1 className="text-3xl p-20">Contact Us</h1>;
 
 function App() {
   return (
@@ -26,9 +25,9 @@ function App() {
           <Route path="/destinations" element={<Destinations />} />
           <Route path="/destination/:id" element={<DestinationDetails />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/services" element={<Services />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
       </div>
     </Router>

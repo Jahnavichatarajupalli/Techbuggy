@@ -1,9 +1,12 @@
 import React from "react";
 import Slider from "react-slick";
+import { useNavigate } from "react-router-dom"; // ✅ import navigation
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const HeroCarousel = () => {
+  const navigate = useNavigate(); // ✅ navigation hook
+
   const images = [
     "carousel1.jpg",
     "https://picsum.photos/id/1015/1920/1080",
@@ -38,30 +41,34 @@ const HeroCarousel = () => {
       </Slider>
 
       {/* Fixed Text Overlay */}
-    <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center text-center text-white px-4">
-              <h1 className="text-5xl md:text-6xl font-bold mb-4 animate-fade-in">
-                Adventure is worthwhile
-              </h1>
-              <p className="text-xl md:text-2xl mb-6">
-                Discover new places with us, Adventure awaits
-              </p>
-              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105">
-                Discover More
-              </button>
-            </div>
-             <style jsx global>{`
-        
+      <div className="absolute inset-0 bg-black bg-opacity-30 flex flex-col items-center justify-center text-center text-white px-4">
+        <h1 className="text-5xl md:text-6xl font-bold mb-4 animate-fade-in">
+          Adventure is worthwhile
+        </h1>
+        <p className="text-xl md:text-2xl mb-6">
+          Discover new places with us, Adventure awaits
+        </p>
+        <button
+          onClick={() => navigate("/destinations")} // ✅ go to destinations page
+          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition transform hover:scale-105"
+        >
+          Discover More
+        </button>
+      </div>
+
+      {/* Custom Arrow Styling */}
+      <style jsx global>{`
         .slick-prev {
           z-index: 20;
           width: 50px;
           height: 50px;
-          padding-left:20px;
+          padding-left: 20px;
         }
         .slick-next {
           z-index: 20;
           width: 50px;
           height: 50px;
-          padding-right:60px;
+          padding-right: 60px;
         }
         .slick-prev:before,
         .slick-next:before {

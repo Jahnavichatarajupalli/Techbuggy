@@ -20,16 +20,16 @@ const Navbar = () => {
 
   return (
     <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
-      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+      <div className="w-full px-6 py-3 flex justify-between items-center">
         {/* Logo */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 ">
           <img src="logo.jpg" alt="Logo" className="w-10 h-10" />
           <span className="text-xl font-bold text-orange-500">TravelWorld</span>
         </div>
 
         {/* Navigation Links */}
         <ul className="hidden md:flex space-x-8 text-gray-700 font-medium">
-          {["Home", "Destinations", "Contact"].map((item, idx) => (
+          {["Home", "Destinations","Contact"].map((item, idx) => (
             <li key={idx}>
               <Link
                 to={item === "Home" ? "/" : `/${item.toLowerCase().replace(" ", "")}`}

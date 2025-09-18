@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const apiUrl = "http://localhost:5000";
+const apiUrl = "https://techbuggy-1.onrender.com";
 
 const Profile = () => {
   const [user, setUser] = useState(null);

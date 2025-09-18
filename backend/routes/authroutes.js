@@ -76,8 +76,9 @@ router.post("/login", async (req, res) => {
 
 
 // GET /api/users/profile
-router.get("/profile", auth, async (req, res) => {
+router.get("/profile", protect, async (req, res) => {
   try {
+    console.log(req.user)
     const user = await User.findById(req.user.id)
       .select("-password")
       .populate("bookings"); // populate bookings if stored as ref

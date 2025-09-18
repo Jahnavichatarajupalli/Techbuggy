@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const apiUrl = "https://techbuggy-1.onrender.com";
+const apiUrl = "http://localhost:5000";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -48,8 +48,8 @@ const Profile = () => {
   const cancelBooking = async (bookingId) => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${apiUrl}/api/bookings/cancel/${bookingId}`, {
-        method: "DELETE",
+      const res = await fetch(`${apiUrl}/api/bookings/${bookingId}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -103,7 +103,7 @@ const Profile = () => {
                   </p>
                   <p
                     className={`mt-2 font-medium ${
-                      booking.status === "Cancelled"
+                      booking.status === "cancelled"
                         ? "text-red-500"
                         : "text-green-600"
                     }`}
@@ -111,10 +111,10 @@ const Profile = () => {
                     Status: {booking.status}
                   </p>
 
-                  {booking.status !== "Cancelled" && (
+                  {booking.status !== "cancelled" && (
                     <button
                       onClick={() => cancelBooking(booking._id)}
-                      className="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg transition"
+                      className="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-lg transition"
                     >
                       Cancel
                     </button>

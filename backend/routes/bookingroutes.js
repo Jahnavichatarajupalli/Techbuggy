@@ -7,7 +7,6 @@ const router = express.Router();
 router.post("/book", authMiddleware, async (req, res) => {
   try {
     const { destinationId,destinationName, date, persons, price } = req.body;
-    console.log(destinationId)
 
     if (!destinationId||!destinationName || !date || !persons || !price) {
       return res.status(400).json({ message: "All fields are required" });
@@ -44,23 +43,10 @@ router.get("/bookings", authMiddleware, async (req, res) => {
 });
 
 // 📍 Get a single booking by ID
-router.get("/:bookingId", authMiddleware, async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    if (!user) return res.status(404).json({ message: "User not found" });
 
-    const booking = user.bookings.id(req.params.bookingId);
-    if (!booking) return res.status(404).json({ message: "Booking not found" });
-
-    res.json(booking);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 // 📍 Cancel (delete) a booking
-router.delete("/:bookingId", authMiddleware, async (req, res) => {
+router.put("/:bookingId", authMiddleware, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -68,14 +54,16 @@ router.delete("/:bookingId", authMiddleware, async (req, res) => {
     const booking = user.bookings.id(req.params.bookingId);
     if (!booking) return res.status(404).json({ message: "Booking not found" });
 
-    booking.remove(); // remove from subdocument
+    booking.status = "cancelled"; // update status
     await user.save();
 
-    res.json({ message: "Booking cancelled" });
+    res.json({ message: "Booking cancelled", booking });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
 
 module.exports = router;
